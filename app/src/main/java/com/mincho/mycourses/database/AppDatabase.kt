@@ -63,6 +63,6 @@ internal class AppDatabase (context : Context): SQLiteOpenHelper (context, DATAB
         }
     }
 
-    companion object : SingletonHolder<AppDatabase, Context>(::AppDatabase)
+    companion object : SingletonHolder<AppDatabase, Context>(::AppDatabase) //sync database
 
 }

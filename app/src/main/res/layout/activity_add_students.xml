@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".AddStudentsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:labelFor="@id/addEdit_facultyNumber"
+            android:text="@string/fac_number"
+            app:layout_constraintBottom_toBottomOf="@+id/addEdit_facultyNumber"
+            app:layout_constraintEnd_toStartOf="@+id/addEdit_facultyNumber"
+            app:layout_constraintTop_toTopOf="@+id/addEdit_facultyNumber" />
+
+        <EditText
+            android:id="@+id/addEdit_facultyNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:labelFor="@id/addEdit_firstName"
+            android:text="@string/first_name_label"
+            app:layout_constraintBottom_toBottomOf="@+id/addEdit_firstName"
+            app:layout_constraintEnd_toStartOf="@+id/addEdit_firstName"
+            app:layout_constraintTop_toTopOf="@+id/addEdit_firstName" />
+
+        <EditText
+            android:id="@+id/addEdit_firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textCapCharacters"
+            app:layout_constraintEnd_toEndOf="@+id/addEdit_facultyNumber"
+            app:layout_constraintStart_toStartOf="@+id/addEdit_facultyNumber"
+            app:layout_constraintTop_toBottomOf="@+id/addEdit_facultyNumber" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"
+            android:labelFor="@id/addEdit_secondName"
+            android:text="@string/second_name_label"
+            app:layout_constraintBottom_toBottomOf="@+id/addEdit_secondName"
+            app:layout_constraintEnd_toStartOf="@+id/addEdit_secondName"
+            app:layout_constraintTop_toTopOf="@+id/addEdit_secondName" />
+
+        <EditText
+            android:id="@+id/addEdit_secondName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@id/textView2"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textAutoCorrect"
+            app:layout_constraintEnd_toEndOf="@+id/addEdit_firstName"
+            app:layout_constraintStart_toStartOf="@+id/addEdit_firstName"
+            app:layout_constraintTop_toBottomOf="@+id/addEdit_firstName" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addEdit_course"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"
+            android:labelFor="@id/addEdit_course"
+            android:text="@string/course_label"
+            app:layout_constraintBottom_toBottomOf="@+id/addEdit_course"
+            app:layout_constraintEnd_toStartOf="@+id/addEdit_course"
+            app:layout_constraintTop_toTopOf="@+id/addEdit_course" />
+
+        <EditText
+            android:id="@+id/addEdit_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@id/textView3"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="textAutoCorrect"
+            app:layout_constraintEnd_toEndOf="@+id/addEdit_secondName"
+            app:layout_constraintStart_toStartOf="@+id/addEdit_secondName"
+            app:layout_constraintTop_toBottomOf="@+id/addEdit_secondName" />
+
+        <Button
+            android:id="@+id/addEdit_saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/save"
+            app:layout_constraintEnd_toEndOf="@+id/addEdit_course"
+            app:layout_constraintTop_toBottomOf="@+id/addEdit_course" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

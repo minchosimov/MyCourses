@@ -46,6 +46,7 @@ class myDB(private val context: Context) {
         mDb.insert("DISCIPLINA", null, values)
     }
 
+
     private class DatabaseHelper internal constructor(context: Context) :
             SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 

@@ -2,6 +2,7 @@ package com.mincho.mycourses.utilities
 
 /**
  *Created by Christophe Beyls
+ * sync database
  */
 
 open class SingletonHolder<out T, in A> (creator: (A) -> T){

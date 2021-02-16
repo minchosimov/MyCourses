@@ -1,44 +1,53 @@
 package com.mincho.mycourses
 
 import android.content.ContentValues
+import android.content.Intent
 import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.mincho.mycourses.database.StudentsDB
-import com.mincho.mycourses.olddb.myDB
+import com.mincho.mycourses.databinding.ActivityMainBinding
+import com.mincho.mycourses.model.Student
 
 private const val TAG = "MainActivity"
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    ShowStudentsFragment.OnStudentsListener {
+    lateinit var binding: ActivityMainBinding //to connect with xml
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        //oldDB
-        val myDB = myDB(this)
-        myDB.open()
-        myDB.insertNewStudents()
-        myDB.insertSpec()
-        myDB.insertDisciplina()
-        myDB.close()
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        //content provider
-        val values = ContentValues()
-        values.put(StudentsDB.Columns.F_NUMBER,1257892)
-        values.put(StudentsDB.Columns.F_NAME, "Иван")
-        values.put(StudentsDB.Columns.S_NAME,"Димитров")
-        values.put(StudentsDB.Columns.COURSE,"Информатика")
+        setContentView(binding.root)
 
-        val id = this.application.contentResolver.insert(StudentsDB.CONTENT_URI,values)
-
-
-        val cursor: Cursor? =
-            this.application.contentResolver.query(StudentsDB.CONTENT_URI, null, null, null,null )
-
-        Log.v(TAG,"${cursor?.count}")
-        cursor?.close()
     }
 
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.menuMain_newStudent -> {
+                startActivity(Intent(this,AddStudentsActivity::class.java))
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStudentsEdit(student: Student) {
+        val intent = Intent(this, AddStudentsActivity::class.java)
+        intent.putExtra(ARG_PUT_STUDENT,student)
+        startActivity(intent)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

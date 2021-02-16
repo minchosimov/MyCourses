@@ -42,13 +42,13 @@ class AppProvider: ContentProvider(){
         val matcher = UriMatcher(UriMatcher.NO_MATCH)
 
         matcher.addURI(CONTENT_AUTHORITY, StudentsDB.TABLE_NAME, STUDENTS)
-        matcher.addURI(CONTENT_AUTHORITY, "TABLE_NAME}/#", STUDENTS_ID)
+        matcher.addURI(CONTENT_AUTHORITY, "${StudentsDB.TABLE_NAME}/#", STUDENTS_ID)
 
         matcher.addURI(CONTENT_AUTHORITY, SubjectDB.TABLE_NAME, SUBJECT)
-        matcher.addURI(CONTENT_AUTHORITY, "TABLE_NAME}/#", SUBJECT_ID)
+        matcher.addURI(CONTENT_AUTHORITY, "${SubjectDB.TABLE_NAME}/#", SUBJECT_ID)
 
         matcher.addURI(CONTENT_AUTHORITY, ProjectDB.TABLE_NAME, PROJECT)
-        matcher.addURI(CONTENT_AUTHORITY, "TABLE_NAME}/#", PROJECT_ID)
+        matcher.addURI(CONTENT_AUTHORITY, "${ProjectDB.TABLE_NAME}/#", PROJECT_ID)
 
         matcher.addURI(CONTENT_AUTHORITY, RelationsDB.TABLE_NAME, RELATIONS)
 
@@ -79,8 +79,8 @@ class AppProvider: ContentProvider(){
     }
 
     override fun query(
-            uri: Uri, projection: Array<out String>?, selection: String?,
-            selectionArgs: Array<out String>?, sortOrder: String?
+        uri: Uri, projection: Array<out String>?, selection: String?,
+        selectionArgs: Array<out String>?, sortOrder: String?
     ): Cursor? {
 
         val match = uriMatcher.match(uri)
@@ -121,7 +121,7 @@ class AppProvider: ContentProvider(){
         val context = context ?: throw NullPointerException("Context can't be null here")
         val db = AppDatabase.getInstance(context).readableDatabase
         val cursor =
-                queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder)
+            queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder)
 
         Log.d(TAG, "query: rows in returned cursor = ${cursor.count}")
 
@@ -176,8 +176,8 @@ class AppProvider: ContentProvider(){
     }
 
     override fun update(
-            uri: Uri, values: ContentValues?, selection: String?,
-            selectionArgs: Array<out String>?
+        uri: Uri, values: ContentValues?, selection: String?,
+        selectionArgs: Array<out String>?
     ): Int {
         val match = uriMatcher.match(uri)
 
