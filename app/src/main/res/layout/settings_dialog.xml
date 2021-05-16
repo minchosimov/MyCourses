@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingDialog_mainLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/settingsDialog_notificationSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/sendNotification_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/time_for_notification_label"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/settingsDialog_notificationSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/settingsDialog_notificationSwitch" />
+
+    <Button
+        android:id="@+id/settingsDialog_saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settingsDialog_cancelButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <Button
+        android:id="@+id/settingsDialog_cancelButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/cancel_label"
+        app:layout_constraintBottom_toBottomOf="@+id/settingsDialog_saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/settingsDialog_saveButton"
+        app:layout_constraintTop_toTopOf="@+id/settingsDialog_saveButton" />
+
+    <TextView
+        android:id="@+id/timeForNotify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/click_for_set_label"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
+        app:layout_constraintStart_toEndOf="@+id/textView22" />
+</androidx.constraintlayout.widget.ConstraintLayout>

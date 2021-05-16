@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mincho.mycourses.database.StudentsDB
 import com.mincho.mycourses.databinding.FragmentShowStudentsBinding
 import com.mincho.mycourses.model.Student
 
@@ -15,17 +15,18 @@ import com.mincho.mycourses.model.Student
  * A simple [Fragment] subclass.
  * Use the [ShowStudentsFragment.newInstance] factory method to
  * create an instance of this fragment.
+ *
+ *При използването на фрагменти, AndroidStudio създава съответно двата файла този, програмен и XML
+ * Както ще забележите в този програмен файл се предифира определена структура наследена от Fragments
+ * Тук конткретно ние наследяване още две структури
  */
 
-enum class SortColumns{
-    FACULTY_NUMBER,
-    NAME,
-    COURSE
-}
 
 class ShowStudentsFragment : Fragment(),
-    StudentsListRVAdapter.OnStudentsClickListener{
+        View.OnClickListener,
+        StudentsListRVAdapter.OnStudentsClickListener{
 
+    // Този интефейс е дефиниран в MainActivity, чрез който обработваме събитието описано там
     interface OnStudentsListener{
         fun onStudentsEdit(student: Student)
     }
@@ -33,16 +34,19 @@ class ShowStudentsFragment : Fragment(),
     private var _binding: FragmentShowStudentsBinding? = null
     private val binding get() =  _binding!!
 
-    private val mAdapter = StudentsListRVAdapter(null,this)
+    //следвщата променлива е от MVVM архитектурата и прави връзката между бизнез модела и потребителския интерфейс
+    private val viewModel by lazy { ViewModelProvider(this).get(StudentsViewModel::class.java)}
 
-    private var sortOrder = SortColumns.FACULTY_NUMBER
+    //следващата пробемлива дефинира инстанция на класа, който се грижи за обработна на RecycleView
+    private val mAdapter = StudentsListRVAdapter(null,this)
 
     private var cursor: Cursor? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadStudents()
+
+        viewModel.cursor.observe(this, { cursor -> mAdapter.swapCursor(cursor)?.close() })
     }
 
     override fun onCreateView(
@@ -58,35 +62,23 @@ class ShowStudentsFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.carList.layoutManager = LinearLayoutManager(context)
-        binding.carList.adapter = mAdapter
+        binding.studentsList.layoutManager = LinearLayoutManager(context)
+        binding.studentsList.adapter = mAdapter
 
         //set onClickListener for heading
-        binding.tdFacNumberHeading.setOnClickListener{
-            sortOrder = SortColumns.FACULTY_NUMBER
-            loadStudents()
 
-        }
-        binding.tdNameHeading.setOnClickListener{
-            sortOrder = SortColumns.NAME
-            loadStudents()
-        }
-        binding.tdCourseHeading.setOnClickListener{
-            sortOrder = SortColumns.COURSE
-            loadStudents()
-        }
+        binding.tdFacNumberHeading.setOnClickListener(this)
+        binding.tdNameHeading.setOnClickListener(this)
+        binding.tdCourseHeading.setOnClickListener(this)
 
     }
 
-    private fun loadStudents(){
-        val order = when (sortOrder){
-            SortColumns.FACULTY_NUMBER -> StudentsDB.Columns.F_NUMBER
-            SortColumns.NAME -> StudentsDB.Columns.F_NAME
-            SortColumns.COURSE -> StudentsDB.Columns.COURSE
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.td_facNumber_heading -> viewModel.sortOrder = SortColumns.FACULTY_NUMBER
+            R.id.td_name_heading -> viewModel.sortOrder = SortColumns.NAME
+            R.id.td_course_heading -> viewModel.sortOrder = SortColumns.COURSE
         }
-        cursor = activity?.contentResolver
-            ?.query(StudentsDB.CONTENT_URI, null, null, null, order)
-        mAdapter.swapCursor(cursor)
     }
 
     override fun onDeleteClick() {
@@ -94,7 +86,7 @@ class ShowStudentsFragment : Fragment(),
     }
 
     override fun onEditClick(student: Student): Boolean {
-        (activity as OnStudentsListener)?.onStudentsEdit(student)
+        (activity as OnStudentsListener).onStudentsEdit(student)
         return true
     }
 

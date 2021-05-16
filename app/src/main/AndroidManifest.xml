@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCourses">
-        <activity android:name=".AddStudentsActivity"></activity>
+
+        <activity android:name=".AddStudentsActivity" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +24,7 @@
             android:name=".database.AppProvider"
             android:authorities="com.mincho.mycourses.provider"
             android:exported="false" />
+
     </application>
 
 </manifest>

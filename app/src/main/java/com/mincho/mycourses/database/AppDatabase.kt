@@ -9,12 +9,15 @@ import com.mincho.mycourses.utilities.SingletonHolder
  *Created by Mincho Simov on 04/02/2021.
  * Basic database class for the application
  * The only class that should use this class is [AppProvider]
+ * В този програмен файл се генерира базата данни за примерния проект
  */
 //private const val TAG = "AppDatabaseClass"
 
+//Това са две променливи, в които се декларира името на базата данни и версията
 private const val DATABASE_NAME = "MyCourses.db"
 private const val DATABASE_VERSION = 1
-//table
+
+//Чрез тези променливи изграждаме структурата на таблиците в базата данни
 private val CREATE_STUDENTS_TABLE_SQL = """CREATE TABLE ${StudentsDB.TABLE_NAME} (
         ${StudentsDB.Columns.F_NUMBER} INTEGER PRIMARY KEY,
         ${StudentsDB.Columns.F_NAME} VARCHAR(20) NOT NULL,
@@ -43,6 +46,7 @@ private val CREATE_RELATIONS_TABLE_SQL = """CREATE TABLE ${RelationsDB.TABLE_NAM
     FOREIGN KEY(${RelationsDB.Columns.ID_PROJECT}) REFERENCES ${ProjectDB.TABLE_NAME}(${ProjectDB.Columns.ID}) ON DELETE CASCADE ON UPDATE CASCADE)""".replaceIndent(" ")
 
 
+//Този клас наследник на SQLiteOpenHelper  създава SQLite база данни
 internal class AppDatabase (context : Context): SQLiteOpenHelper (context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     override fun onCreate(db: SQLiteDatabase) {

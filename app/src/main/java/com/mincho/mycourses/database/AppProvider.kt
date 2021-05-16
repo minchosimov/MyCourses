@@ -13,7 +13,12 @@ import android.util.Log
  *Created by Mincho Simov on 04/02/2021.
  * This is the ContentProvider child class
  * This is the only class that know about [AppDatabase]
+ * Съобразявайки се с MVVM архитектурата сиздаваме този клас.
+ * Това е единствения клас, който комуникира с базата данни
+ * Достапа до мрежата става чрез URI
  */
+
+
 
 private const val TAG = "AppProvider"
 

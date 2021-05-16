@@ -30,8 +30,8 @@ class myDB(private val context: Context) {
         values.put("F_NAME", "Иван")
         values.put("S_NAME","Димитров")
         mDb.insert("STUDENTS",null, values)
-
     }
+
     fun insertSpec(){
         val values = ContentValues()
         values.put("NAME", "Android")

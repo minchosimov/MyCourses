@@ -1,20 +1,23 @@
 package com.mincho.mycourses
 
 import android.app.Activity
-import android.content.ContentValues
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mincho.mycourses.database.StudentsDB
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.mincho.mycourses.databinding.ActivityAddStudentsBinding
 import com.mincho.mycourses.model.Student
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 const val ARG_PUT_STUDENT = "student"
+
+/** Активитито, което се грижи за добавяне или редактиране на данните за един студент.
+ * Тези дейности се извършват от потребителя
+ */
 
 class AddStudentsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddStudentsBinding
+
+    private val viewModel by lazy { ViewModelProvider(this).get(StudentsViewModel::class.java)}
 
     private var student: Student? = null
 
@@ -45,62 +48,34 @@ class AddStudentsActivity : AppCompatActivity() {
                 binding.addEditFirstName.setText(student.fName)
                 binding.addEditSecondName.setText(student.sName)
                 binding.addEditCourse.setText(student.course)
-
             }
         }
-
 
         binding.addEditSaveButton.setOnClickListener {
             saveStudent()
         }
-
     }
 
+
+    //Следващата функция извлича информацията въведена от потребителя
     private fun studentFromUI():Student{
-        // !!!!
-        val newStudent = Student(binding.addEditFacultyNumber.text.toString().toLong(),
+        return Student(binding.addEditFacultyNumber.text.toString().toLong(),
             binding.addEditFirstName.text.toString(),
             binding.addEditSecondName.text.toString(),
             binding.addEditCourse.text.toString())
 
-        return newStudent
-
     }
 
+    //Функцията записва извлечената информация в базата данни
     private fun saveStudent() {
         val newStudent = studentFromUI()
 
-        if (newStudent != null) { //!!!
-            putStudent(newStudent)
-            setResult(Activity.RESULT_OK)
-            finish()
-        }
+        //!!! Помислете какво липсва
+        viewModel.putStudent(newStudent,isUpdate,oldFacNumber)
+        setResult(Activity.RESULT_OK)
+        finish()
 
         setResult(Activity.RESULT_CANCELED)
         finish()
-    }
-
-    private fun putStudent(newStudent: Student){
-
-        val values = ContentValues()
-        values.put(StudentsDB.Columns.F_NUMBER, newStudent.facNumber)
-        values.put(StudentsDB.Columns.F_NAME, newStudent.fName)
-        values.put(StudentsDB.Columns.S_NAME, newStudent.sName)
-        values.put(StudentsDB.Columns.COURSE, newStudent.course)
-
-        if (!isUpdate){
-            GlobalScope.launch {
-                val uri =
-                    application.contentResolver?.insert(
-                        StudentsDB.CONTENT_URI,
-                        values
-                    )
-            }
-        } else {
-            GlobalScope.launch {
-                application.contentResolver?.update(
-                    StudentsDB.buildUriFromId(oldFacNumber),values,null,null)
-            }
-        }
     }
 }

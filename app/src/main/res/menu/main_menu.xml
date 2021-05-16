@@ -5,4 +5,8 @@
         android:orderInCategory="100"
         android:title="@string/students_label" />
 
+    <item
+        android:id="@+id/menuMain_settings"
+        android:orderInCategory="100"
+        android:title="@string/settings_label" />
 </menu>
